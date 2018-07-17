@@ -59,7 +59,6 @@ public class TestSort {
 
     public static int getMiddle(int[] arr, int low, int high) {
         int temp = arr[low];
-        int midPosition = 0;
         int left = low;
         while(low < high) {
             while(low < high && arr[high] >= temp) {
