@@ -1,0 +1,7 @@
+success:200
+created:201
+accepted:202
+found:302
+unauthorized:401
+error:500
+continue:100
