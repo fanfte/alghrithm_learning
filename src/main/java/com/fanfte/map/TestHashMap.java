@@ -5,12 +5,17 @@ import java.util.Map;
 
 public class TestHashMap {
 
-    public static void main(String[] args) {
+    String name;
 
-        System.out.println("ss");
-        Map<String, String> map = new HashMap<String, String>(16, 0.75f);
-        map.put("aaa", "111");
-        map.put("aaa", "222");
-        System.out.println(map);
+    public TestHashMap(String name) {
+        this.name = name;
+    }
+
+    public static void main(String[] args) {
+        Map<TestHashMap, String> map = new HashMap<>();
+        TestHashMap obj = new TestHashMap("sdsd");
+        map.put(obj, "name");
+        String hello = map.get(obj);
+        System.out.println(hello);
     }
 }
