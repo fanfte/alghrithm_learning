@@ -1,5 +1,8 @@
 package com.fanfte.java8;
 
+import com.fanfte.java8.stream.Dish;
+
+import java.net.Inet4Address;
 import java.util.*;
 
 /**
@@ -67,5 +70,14 @@ public class Test1 {
 
         String s3 = map.computeIfPresent(9, (n2, v) -> null);
         System.out.println(map.containsKey(9));
+
+        List<Integer> list2  = new ArrayList<>();
+        list2.add(1);
+        list2.add(2);
+        list2.add(3);
+        list2.add(4);
+        list2.add(5);
+
+//        Strategy strategy1 = new Strategy((String src) -> src.matches("[a-z]+"));
     }
 }

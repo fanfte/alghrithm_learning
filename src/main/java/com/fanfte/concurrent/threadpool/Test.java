@@ -24,13 +24,16 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10, 0l, TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(1024), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
-
-        for (int i = 0; i < 10; i++) {
-            threadPoolExecutor.execute(new MyTask());
-        }
-
-        threadPoolExecutor.shutdown();
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10, 0l, TimeUnit.SECONDS,
+//                new LinkedBlockingDeque<>(1024), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+//
+//        for (int i = 0; i < 10; i++) {
+//            threadPoolExecutor.execute(new MyTask());
+//        }
+//
+//        threadPoolExecutor.shutdown();
+        System.out.println((1 << 29) - 1 );
+        System.out.println((-1) << 29 );
+        System.out.println((-1) << 29 & (1 << 29) - 1);
     }
 }
