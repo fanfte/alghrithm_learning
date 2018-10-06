@@ -12,10 +12,10 @@ public class CallableAndFuture {
                 return new Random().nextInt(100);
             }
         };
-        FutureTask<Integer> future = new FutureTask<Integer>(callable);
-        ExecutorService es = Executors.newCachedThreadPool();
-        Future<?> result = es.submit(future);
-        es.shutdown();
-        System.out.println(future.get());
+//        FutureTask<Integer> future = new FutureTask<>(callable);
+//        ExecutorService es = Executors.newCachedThreadPool();
+//        Future<?> result = es.submit(future);
+//        es.shutdown();
+//        System.out.println(future.get());
     }
 }
