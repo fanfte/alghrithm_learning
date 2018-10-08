@@ -1,9 +1,9 @@
 package com.fanfte.netty.im;
 
+import com.fanfte.netty.im.handler.AuthHandler;
 import com.fanfte.netty.im.handler.LifeCycleTestHandler;
-import com.fanfte.netty.im.handler.LoginRequestHandler;
-import com.fanfte.netty.im.handler.MessageRequestHandler;
-import com.fanfte.netty.im.handler.ServerHandler;
+import com.fanfte.netty.im.server.handler.LoginRequestHandler;
+import com.fanfte.netty.im.server.handler.MessageRequestHandler;
 import com.fanfte.netty.im.message.codec.decode.PacketDecoder;
 import com.fanfte.netty.im.message.codec.encode.PacketEncoder;
 import io.netty.bootstrap.ServerBootstrap;
@@ -37,11 +37,26 @@ public class NettyServer {
                         ch.pipeline().addLast(new LifeCycleTestHandler());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
+                        ch.pipeline().addLast(new AuthHandler());
+
                         ch.pipeline().addLast(new MessageRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
 
                     }
                 });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        System.out.println("当前连接数: " + GlobalConstants.connections);
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
         bind(serverBootstrap, 8000);
     }
 

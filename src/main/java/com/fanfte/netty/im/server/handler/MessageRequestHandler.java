@@ -1,7 +1,10 @@
-package com.fanfte.netty.im.handler;
+package com.fanfte.netty.im.server.handler;
 
 import com.fanfte.netty.im.packet.MessageRequestPacket;
 import com.fanfte.netty.im.packet.MessageResponsePacket;
+import com.fanfte.netty.im.session.Session;
+import com.fanfte.netty.im.util.SessionUtil;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -18,7 +21,21 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket messageRequestPacket) throws Exception {
 //        MessageResponsePacket messageResponsePacket = receiveMessage(messageRequestPacket);
 //        ByteBuf responseButeBuf = PacketCodec.getInstance().encode(ctx.alloc(), messageResponsePacket);
-        ctx.channel().writeAndFlush(receiveMessage(messageRequestPacket));
+        // 拿到消息发送方的会话信息
+        Session session = SessionUtil.getSession(ctx.channel());
+        MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
+        messageResponsePacket.setMessage(messageRequestPacket.getMessage());
+        messageResponsePacket.setFromUserId(session.getUserId());
+        messageResponsePacket.setFromUserName(session.getUsername());
+
+        Channel toUserChannel = SessionUtil.getChannel(messageRequestPacket.getToUserId());
+        if(toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
+            toUserChannel.writeAndFlush(messageResponsePacket);
+            ctx.channel().writeAndFlush("发送成功");
+        } else {
+            System.out.println("session: " + session.getUserId() + "不在线，发送失败！");
+            ctx.channel().writeAndFlush("session: " + session.getUserId() + "不在线，发送失败！");
+        }
     }
 
     public MessageResponsePacket receiveMessage(MessageRequestPacket messageRequestPacket) {

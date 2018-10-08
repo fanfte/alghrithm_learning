@@ -1,16 +1,14 @@
 package com.fanfte.netty.im;
 
-import com.fanfte.netty.im.handler.ClientHandler;
-import com.fanfte.netty.im.handler.LoginResponseHandler;
-import com.fanfte.netty.im.handler.MessageResponseHandler;
-import com.fanfte.netty.im.message.codec.PacketCodec;
+import com.fanfte.netty.im.client.handler.LoginResponseHandler;
+import com.fanfte.netty.im.client.handler.MessageResponseHandler;
 import com.fanfte.netty.im.message.codec.decode.PacketDecoder;
 import com.fanfte.netty.im.message.codec.encode.PacketEncoder;
-import com.fanfte.netty.im.packet.LoginResponsePacket;
+import com.fanfte.netty.im.packet.LoginRequestPacket;
 import com.fanfte.netty.im.packet.MessageRequestPacket;
 import com.fanfte.netty.im.util.LoginUtil;
+import com.fanfte.netty.im.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -68,18 +66,32 @@ public class NettyClient {
     }
 
     public static void startConsoleThread(Channel channel) {
+        Scanner sc = new Scanner(System.in);
+        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
         new Thread(() -> {
             while(!Thread.interrupted()) {
-                if(LoginUtil.hasLogin(channel)) {
-                    System.out.println("输入消息发送至服务端");
-                    Scanner sc = new Scanner(System.in);
-                    String line = sc.nextLine();
-                    MessageRequestPacket packet = new MessageRequestPacket();
-                    packet.setMessage(line);
-//                    ByteBuf byteBuf = PacketCodec.getInstance().encode(packet);
-                    channel.writeAndFlush(packet);
+                if(!SessionUtil.hasLogin(channel)) {
+                    System.out.println("输入用户名登录");
+                    String username = sc.nextLine();
+                    loginRequestPacket.setUsername(username);
+                    loginRequestPacket.setPassword("pwd");
+                    channel.writeAndFlush(loginRequestPacket);
+                    waitForLoginResponse();
+                } else {
+                    System.out.println("输入userId和消息内容发送消息.");
+                    String toUserId = sc.next();
+                    String message = sc.next();
+                    channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
                 }
             }
         }).start();
+    }
+
+    private static void waitForLoginResponse() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

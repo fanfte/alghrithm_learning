@@ -1,8 +1,10 @@
-package com.fanfte.netty.im.handler;
+package com.fanfte.netty.im.client.handler;
 
 import com.fanfte.netty.im.packet.LoginRequestPacket;
 import com.fanfte.netty.im.packet.LoginResponsePacket;
+import com.fanfte.netty.im.session.Session;
 import com.fanfte.netty.im.util.LoginUtil;
+import com.fanfte.netty.im.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -18,7 +20,15 @@ import java.util.UUID;
 public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponsePacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket loginResponsePacket) throws Exception {
-        handleLoginResponse(ctx, loginResponsePacket);
+//        handleLoginResponse(ctx, loginResponsePacket);
+        String userId = loginResponsePacket.getUserId();
+        String username = loginResponsePacket.getUsername();
+        if(loginResponsePacket.isSuccess()) {
+            System.out.println(username + " 登录成功,userId为 " + userId);
+            SessionUtil.bindSession(new Session(userId, username), ctx.channel());
+        } else {
+            System.out.println("登录失败 " + loginResponsePacket.getReason());
+        }
     }
 
     @Override
@@ -30,7 +40,7 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
         loginRequestPacket.setPassword("123456");
 
         // 写数据
-        ctx.channel().writeAndFlush(loginRequestPacket);
+//        ctx.channel().writeAndFlush(loginRequestPacket);
     }
 
     public void handleLoginResponse(ChannelHandlerContext ctx, LoginResponsePacket loginResponsePacket) {
@@ -40,5 +50,10 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
         } else {
             System.out.println(new Date() + "-> 客户端登录失败，原因:" + loginResponsePacket.getReason());
         }
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("客户端连接被关闭");
     }
 }

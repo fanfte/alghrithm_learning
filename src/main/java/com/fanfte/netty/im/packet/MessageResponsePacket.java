@@ -14,6 +14,10 @@ import static com.fanfte.netty.im.message.Command.MESSAGE_RESPONSE;
 @Data
 public class MessageResponsePacket extends Packet {
 
+    private String fromUserId;
+
+    private String fromUserName;
+
     private String message;
 
     @Override
