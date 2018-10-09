@@ -1,7 +1,7 @@
 package com.fanfte.netty.im.server.handler;
 
-import com.fanfte.netty.im.packet.MessageRequestPacket;
-import com.fanfte.netty.im.packet.MessageResponsePacket;
+import com.fanfte.netty.im.packet.request.MessageRequestPacket;
+import com.fanfte.netty.im.packet.response.MessageResponsePacket;
 import com.fanfte.netty.im.session.Session;
 import com.fanfte.netty.im.util.SessionUtil;
 import io.netty.channel.Channel;

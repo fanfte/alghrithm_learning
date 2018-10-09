@@ -1,4 +1,4 @@
-package com.fanfte.netty.im.handler;
+package com.fanfte.netty.im.server.handler;
 
 import com.fanfte.netty.im.GlobalConstants;
 import io.netty.channel.ChannelHandlerContext;

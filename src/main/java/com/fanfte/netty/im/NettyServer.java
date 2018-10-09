@@ -1,9 +1,6 @@
 package com.fanfte.netty.im;
 
-import com.fanfte.netty.im.handler.AuthHandler;
-import com.fanfte.netty.im.handler.LifeCycleTestHandler;
-import com.fanfte.netty.im.server.handler.LoginRequestHandler;
-import com.fanfte.netty.im.server.handler.MessageRequestHandler;
+import com.fanfte.netty.im.server.handler.*;
 import com.fanfte.netty.im.message.codec.decode.PacketDecoder;
 import com.fanfte.netty.im.message.codec.encode.PacketEncoder;
 import io.netty.bootstrap.ServerBootstrap;
@@ -40,6 +37,11 @@ public class NettyServer {
                         ch.pipeline().addLast(new AuthHandler());
 
                         ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        ch.pipeline().addLast(new JoinGroupRequestHandler());
+                        ch.pipeline().addLast(new QuitGroupRequestHandler());
+                        ch.pipeline().addLast(new LogoutRequestHandler());
+                        ch.pipeline().addLast(new ListGroupMembersRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
 
                     }

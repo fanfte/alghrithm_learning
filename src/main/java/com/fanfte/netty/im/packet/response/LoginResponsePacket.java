@@ -1,4 +1,4 @@
-package com.fanfte.netty.im.packet;
+package com.fanfte.netty.im.packet.response;
 
 import com.fanfte.netty.im.message.Packet;
 import lombok.Data;

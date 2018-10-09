@@ -1,12 +1,11 @@
 package com.fanfte.netty.im;
 
-import com.fanfte.netty.im.client.handler.LoginResponseHandler;
-import com.fanfte.netty.im.client.handler.MessageResponseHandler;
+import com.fanfte.netty.im.client.handler.*;
+import com.fanfte.netty.im.console.ConsoleCommandManager;
+import com.fanfte.netty.im.console.LoginConsoleCommand;
 import com.fanfte.netty.im.message.codec.decode.PacketDecoder;
 import com.fanfte.netty.im.message.codec.encode.PacketEncoder;
-import com.fanfte.netty.im.packet.LoginRequestPacket;
-import com.fanfte.netty.im.packet.MessageRequestPacket;
-import com.fanfte.netty.im.util.LoginUtil;
+import com.fanfte.netty.im.packet.response.JoinGroupResponsePacket;
 import com.fanfte.netty.im.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -41,7 +40,12 @@ public class NettyClient {
                     protected void initChannel(SocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new CreateGroupResponseHandler());
+                        ch.pipeline().addLast(new JoinGroupResponseHandler());
+                        ch.pipeline().addLast(new QuitGroupResponseHandler());
+                        ch.pipeline().addLast(new ListGroupMembersResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
@@ -67,31 +71,19 @@ public class NettyClient {
 
     public static void startConsoleThread(Channel channel) {
         Scanner sc = new Scanner(System.in);
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+        ConsoleCommandManager mansger = new ConsoleCommandManager();
+        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+
         new Thread(() -> {
             while(!Thread.interrupted()) {
                 if(!SessionUtil.hasLogin(channel)) {
                     System.out.println("输入用户名登录");
-                    String username = sc.nextLine();
-                    loginRequestPacket.setUsername(username);
-                    loginRequestPacket.setPassword("pwd");
-                    channel.writeAndFlush(loginRequestPacket);
-                    waitForLoginResponse();
+                    loginConsoleCommand.exec(sc, channel);
                 } else {
-                    System.out.println("输入userId和消息内容发送消息.");
-                    String toUserId = sc.next();
-                    String message = sc.next();
-                    channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+                    System.out.println("输入命令");
+                    mansger.exec(sc, channel);
                 }
             }
         }).start();
-    }
-
-    private static void waitForLoginResponse() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

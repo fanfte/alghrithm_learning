@@ -1,4 +1,4 @@
-package com.fanfte.netty.im.handler;
+package com.fanfte.netty.im.server.handler;
 
 import com.fanfte.netty.im.util.LoginUtil;
 import com.fanfte.netty.im.util.SessionUtil;

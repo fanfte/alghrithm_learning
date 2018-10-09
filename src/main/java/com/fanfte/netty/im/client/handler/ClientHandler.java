@@ -1,11 +1,10 @@
-package com.fanfte.netty.im.handler;
+package com.fanfte.netty.im.client.handler;
 
 import com.fanfte.netty.im.message.Packet;
-import com.fanfte.netty.im.packet.LoginRequestPacket;
+import com.fanfte.netty.im.packet.request.LoginRequestPacket;
 import com.fanfte.netty.im.message.codec.PacketCodec;
-import com.fanfte.netty.im.packet.LoginResponsePacket;
-import com.fanfte.netty.im.packet.MessageResponsePacket;
-import com.fanfte.netty.im.util.LoginUtil;
+import com.fanfte.netty.im.packet.response.LoginResponsePacket;
+import com.fanfte.netty.im.packet.response.MessageResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

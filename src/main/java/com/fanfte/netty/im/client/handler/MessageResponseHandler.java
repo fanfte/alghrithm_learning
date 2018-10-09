@@ -1,6 +1,6 @@
 package com.fanfte.netty.im.client.handler;
 
-import com.fanfte.netty.im.packet.MessageResponsePacket;
+import com.fanfte.netty.im.packet.response.MessageResponsePacket;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 

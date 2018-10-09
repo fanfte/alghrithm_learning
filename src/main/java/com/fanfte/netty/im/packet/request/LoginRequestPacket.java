@@ -1,4 +1,4 @@
-package com.fanfte.netty.im.packet;
+package com.fanfte.netty.im.packet.request;
 
 import com.fanfte.netty.im.message.Packet;
 import lombok.Data;
@@ -22,7 +22,6 @@ public class LoginRequestPacket extends Packet {
 
     @Override
     public Byte getCommand() {
-
         return LOGIN_REQUEST;
     }
 }

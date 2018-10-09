@@ -1,9 +1,8 @@
 package com.fanfte.netty.im.server.handler;
 
-import com.fanfte.netty.im.packet.LoginRequestPacket;
-import com.fanfte.netty.im.packet.LoginResponsePacket;
+import com.fanfte.netty.im.packet.request.LoginRequestPacket;
+import com.fanfte.netty.im.packet.response.LoginResponsePacket;
 import com.fanfte.netty.im.session.Session;
-import com.fanfte.netty.im.util.LoginUtil;
 import com.fanfte.netty.im.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

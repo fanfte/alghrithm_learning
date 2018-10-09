@@ -1,12 +1,10 @@
 package com.fanfte.netty.im.message.codec;
 
-import com.fanfte.netty.im.packet.LoginRequestPacket;
+import com.fanfte.netty.im.packet.request.*;
 import com.fanfte.netty.im.message.Packet;
 import com.fanfte.netty.im.message.serialize.JSONSerializer;
 import com.fanfte.netty.im.message.serialize.Serializer;
-import com.fanfte.netty.im.packet.LoginResponsePacket;
-import com.fanfte.netty.im.packet.MessageRequestPacket;
-import com.fanfte.netty.im.packet.MessageResponsePacket;
+import com.fanfte.netty.im.packet.response.*;
 import io.netty.buffer.ByteBuf;
 
 import java.util.HashMap;
@@ -41,6 +39,16 @@ public class PacketCodec {
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        packetTypeMap.put(LOG_OUT_REQUEST, LogoutRequestPacket.class);
+        packetTypeMap.put(LOG_OUT_RESPONSE, LogoutResponsePacket.class);
+        packetTypeMap.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        packetTypeMap.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        packetTypeMap.put(JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        packetTypeMap.put(JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+        packetTypeMap.put(QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
+        packetTypeMap.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
