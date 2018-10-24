@@ -11,9 +11,23 @@ import org.springframework.stereotype.Component;
  **/
 @Component("carFactoryBean")
 public class CarFactoryBean implements FactoryBean<Car> {
+
+    private String carInfo;
+
+    public String getCarInfo() {
+        return carInfo;
+    }
+
+    public void setCarInfo(String carInfo) {
+        this.carInfo = carInfo;
+    }
+
     @Override
     public Car getObject() throws Exception {
-        return new Car("BMW", "BMW");
+        Car car = new Car();
+        car.setBrand(carInfo.split(",")[0]);
+        car.setName(carInfo.split(",")[1]);
+        return car;
     }
 
     @Override
