@@ -1,5 +1,8 @@
 package com.fanfte.concurrent.juc;
 
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -12,28 +15,30 @@ public class LinkedBlockingQueueDemo {
 
     public static void main(String[] args) {
         LinkedBlockingQueue linkedBlockingQueue = new LinkedBlockingQueue<>(1024);
+        ConcurrentHashMap<String, Thread> threadMap = new ConcurrentHashMap<>();
         for (int i = 0; i < 5; i++) {
             final int num = i;
-            new Thread(() -> {
+            Thread thread = new Thread(() -> {
                 int j = 0;
-                while(true) {
+                while (true) {
                     try {
                         linkedBlockingQueue.put(num + "号线程的" + j + "号商品");
-                        j ++;
+                        j++;
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-            }).start();
+            });
+            thread.start();
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             new Thread(() -> {
                 while(true) {
                     try {
                         System.out.println("消费了" + linkedBlockingQueue.take());
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -41,6 +46,17 @@ public class LinkedBlockingQueueDemo {
                 }
             }).start();
         }
+
+        new Thread(()-> {
+            while (true) {
+                try {
+                    System.out.println(linkedBlockingQueue.size());
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
 }
