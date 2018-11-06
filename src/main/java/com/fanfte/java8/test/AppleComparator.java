@@ -1,4 +1,4 @@
-package com.fanfte.java8;
+package com.fanfte.java8.test;
 
 import java.util.Comparator;
 

@@ -16,11 +16,11 @@ import org.springframework.core.io.ClassPathResource;
  **/
 public class Main {
     public static void main(String[] args) {
-//        ApplicationContext context = new ClassPathXmlApplicationContext("application-test.xml");
-//        Car o1 = context.getBean("carFactoryBean", Car.class);
-//        Object o2 = context.getBean("&carFactoryBean");
-//        System.out.println(o1.getClass() + " " + o1.getName());
-//        System.out.println(o2.getClass());
+        ApplicationContext context = new ClassPathXmlApplicationContext("application-test.xml");
+        Car o1 = context.getBean("carFactoryBean", Car.class);
+        Object o2 = context.getBean("&carFactoryBean");
+        System.out.println(o1.getClass() + " " + o1.getName());
+        System.out.println(o2.getClass());
 
         BeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("application-test.xml"));
         CarFactoryBean carFactoryBean = (CarFactoryBean) xmlBeanFactory.getBean("&carFactoryBean");

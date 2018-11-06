@@ -1,8 +1,5 @@
-package com.fanfte.java8;
+package com.fanfte.java8.test;
 
-import com.fanfte.java8.stream.Dish;
-
-import java.net.Inet4Address;
 import java.util.*;
 
 /**

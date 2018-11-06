@@ -1,8 +1,7 @@
-package com.fanfte.java8;
+package com.fanfte.java8.test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.nio.file.DirectoryStream;
 import java.util.*;
 import java.util.function.*;
 
