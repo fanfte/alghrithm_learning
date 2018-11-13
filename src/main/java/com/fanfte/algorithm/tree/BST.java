@@ -111,6 +111,47 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
+    /**
+     * 前序遍历
+     */
+    public void preOrder() {
+        preOrder(root);
+    }
+
+    private void preOrder(Node node) {
+        if(node == null) {
+            return ;
+        }
+        System.out.println(node.e);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        generateBSTString(root, 0, sb);
+        return sb.toString();
+    }
+
+    private void generateBSTString(Node node, int depth, StringBuilder res) {
+        if(node == null) {
+            res.append(generateDepthString(depth) + "null\n");
+            return;
+        }
+        res.append(generateDepthString(depth) + node.e + "\n");
+        generateBSTString(node.left, depth + 1, res);
+        generateBSTString(node.right, depth + 1, res);
+    }
+
+    public String generateDepthString(int depth) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0;i < depth; i ++) {
+            sb.append("--");
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         BST<Integer> bst = new BST<Integer>();
         bst.add(2);
@@ -118,5 +159,7 @@ public class BST<E extends Comparable<E>> {
         bst.add(3);
 
         System.out.println(bst.contains(3));
+
+        System.out.println(bst);
     }
 }
