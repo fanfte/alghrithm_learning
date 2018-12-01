@@ -12,10 +12,10 @@ public class TestHashMap {
     }
 
     public static void main(String[] args) {
-        Map<TestHashMap, String> map = new HashMap<>();
-        TestHashMap obj = new TestHashMap("sdsd");
-        map.put(obj, "name");
-        String hello = map.get(obj);
-        System.out.println(hello);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("aaa", "111");
+        map.put("aaa", "222");
+        System.out.println(map);
     }
 }

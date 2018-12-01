@@ -12,6 +12,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationContext {
     @Override
     protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
+        super.setAllowBeanDefinitionOverriding(false);
+        super.setAllowCircularReferences(false);
         super.customizeBeanFactory(beanFactory);
     }
+
+//    @Override
+//    protected void initPropertySources() {
+//        getEnvironment().setRequiredProperties("VAR");
+//    }
 }
