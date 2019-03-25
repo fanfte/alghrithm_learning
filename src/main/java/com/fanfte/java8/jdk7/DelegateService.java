@@ -1,6 +1,5 @@
 package com.fanfte.java8.jdk7;
 
-import jdk.management.resource.ResourceId;
 
 /**
  * Created by tianen on 2018/11/6
